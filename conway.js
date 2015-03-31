@@ -2,40 +2,37 @@ function Cell(h, w){
       this.y = h;
       this.x = w;
       this.isAlive = false;
-};
-
-var grid = [];
-var height = 25;
-var width = 50;
-
-// Create data structure of grid - Push cell structure to array
-function generateGrid(h, w){
-      for(var h = 1; h <= height; h++){
-            grid[h] =  [];
-            for(var w; w <= width; w++){
-                  var cell = new Cell(h, w);
-                  grid[h].push(cell);
+      this.lifeState = function() {
+            if(this.isAlive === true){
+                  this.$td.addClass("alive");
+            } else {
+                  this.$td.removeClass("alive");
             };
       };
 };
 
-// Create DOM representation of grid
-function generateDOM(h, w){
-      for(var h = 0; h < height; h++){
-            var $row = $("<tr>");
-            $(".game-grid").append($row);
-            for(var w = 0; w < width; w++){
-                var $col = $("<td>");
-                $row.append($col);
+var grid = [];
+
+// Create data/DOM structure of grid - Push cell structure to array
+function generateGrid(height, width){
+      for(var h = 0; h <= height; h++){
+            var $tr = $("<tr>");
+            $(".game-grid").append($tr);
+            grid[h] =  [];
+            for(var w = 0; w <= width; w++){
+                var cell = new Cell(h, w);
+                var $td = $("<td>");
+                $tr.append($td);
+                cell.$td = $td;
+                grid[h].push(cell);
             };
       };
 };
 
 $(document).ready(function(){
-    generateGrid(height, width);
-    generateDOM(height, width);
+    generateGrid(25, 50)
 
-    $("<td>").click(function(){
-        $(this).addClass("alive");
-    });
+    cell.$td.click(function(){
+          cell.alive = !cell.alive
+   });
 });
