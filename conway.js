@@ -1,17 +1,20 @@
+var grid = [];
+var height = 25;
+var width = 50;
+
 function Cell(h, w){
       this.y = h;
       this.x = w;
       this.isAlive = false;
-      this.lifeState = function() {
-            if(this.isAlive === true){
+      this.updateLife = function() {
+            console.log("hi from the cell!")
+            if(this.isAlive){
                   this.$td.addClass("alive");
             } else {
                   this.$td.removeClass("alive");
             };
       };
 };
-
-var grid = [];
 
 // Create data/DOM structure of grid - Push cell structure to array
 function generateGrid(height, width){
@@ -29,10 +32,21 @@ function generateGrid(height, width){
       };
 };
 
-$(document).ready(function(){
-    generateGrid(25, 50)
+function runGrid(height, width){
+      for(var h = 0; h < height; h++){
+            for(var w = 0; w < width; w++){
+                  var cell = grid[h][w]
+                  cell.$td.click(function(){
+                        cell.isAlive = !this.isAlive;
+                        cell.updateLife;
+                        console.log(cell);
+                        // $(this).addClass("alive");
+                  });
+            };
+      };
+};
 
-    cell.$td.click(function(){
-          cell.alive = !cell.alive
+$(document).ready(function(){
+    generateGrid(height, width);
+    runGrid(height, width);
    });
-});
