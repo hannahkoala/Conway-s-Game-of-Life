@@ -22,31 +22,26 @@ function Cell(h, w){
       };
 };
 
-// Create data/DOM structure of grid - Push cell structure to array
-function generateGrid(height, width){
+function createCell(h, w){
+    var cell = new Cell(h, w);
+    var $td = $("<td>");
+    cell.$td = $td;
+    grid[h][w] = cell;
+    return cell.$td;
+};
+
+function gridBus(height, width){
       for(var h = 0; h < height; h++){
             var $tr = $("<tr>");
             $(".game-grid").append($tr);
             grid[h] =  [];
             for(var w = 0; w < width; w++){
-                var cell = new Cell(h, w);
-                var $td = $("<td>");
-                $tr.append($td);
-                cell.$td = $td;
-                grid[h][w] = cell;
-            };
-      };
-};
-
-function runGrid(height, width){
-      for(var h = 0; h < height; h++){
-            for(var w = 0; w < width; w++){
-                  grid[h][w].setupOnclick();
+                $tr.append(createCell(h, w));
+                grid[h][w].setupOnclick();
             };
       };
 };
 
 $(document).ready(function(){
-    generateGrid(height, width);
-    runGrid(height, width);
+    gridBus(height, width);
    });
